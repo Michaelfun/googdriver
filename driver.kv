@@ -1,0 +1,268 @@
+<MyCard2>
+    padding: "4dp"
+    spacing: "20dp"
+    size_hint_y: None
+    height: 150
+    elevetion: 4,
+    
+    MDRelativeLayout:
+
+        MDButton:
+            style: "text"
+            pos_hint: {"top": 1, "right": 1}
+            on_release:
+                app.start_download_file(folder_name.text,folder_Link.text)
+
+            MDButtonIcon:
+                icon: "arrow-down-bold-circle"
+            
+            # MDButtonText:
+            #     text: "DownloadFile"
+        
+        MDIconButton:
+            icon: "file"
+            pos_hint: {"top": 1, "Left": 1}
+
+        MDLabel:
+            id: folder_name
+            text: root.text
+            # font_style: "Display"
+            role: "small"
+            color: "grey"
+            adaptive_height: True
+            bold: True
+            pos: "12dp", "12dp"
+
+        MDLabel:
+            id: folder_Link
+            text: root.folder_link
+            adaptive_size: True
+            theme_text_color: "Custom"
+            text_color: 0,0,0,0
+            pos: "12dp", "12dp"
+
+
+<MyCard1>
+    padding: "4dp"
+    size_hint_y: None
+    height: 150
+    elevetion: 4,
+    
+    MDRelativeLayout:
+
+        MDButton:
+            style: "text"
+            pos_hint: {"top": 1, "right": 1}
+            on_release:
+                app.start_download(folder_name.text,folder_Link.text)
+
+            MDButtonIcon:
+                icon: "arrow-down-bold-circle"
+            
+            # MDButtonText:
+            #     text: "DownloadFolder"
+        
+        MDButton:
+            style: "text"
+            pos_hint: {"top": 1, "Left": 1}
+            on_release:
+                app.single_file_list(folder_name.text,folder_Link.text)
+
+            MDButtonIcon:
+                icon: "folder"
+            
+            MDButtonText:
+                text: "Open"
+
+        MDLabel:
+            id: folder_name
+            text: root.text
+            role: "small"
+            adaptive_height: True
+            color: "grey"
+            pos: "12dp", "12dp"
+            bold: True
+
+        MDLabel:
+            id: folder_Link
+            text: root.folder_link
+            adaptive_height: True
+            theme_text_color: "Custom"
+            text_color: 0,0,0,0
+            pos: "12dp", "12dp"
+
+
+<MyCard>
+    padding: "4dp"
+    size_hint_y: None
+    height: 150
+    elevetion: 4,
+    on_release:
+        app.sub_screen(folder_name.text)
+    
+
+    MDRelativeLayout:
+        
+        MDButton:
+            style: "text"
+            pos_hint: {"top": 1, "Left": 1}
+            on_release:
+                app.sub_screen(folder_name.text)
+
+            MDButtonIcon:
+                icon: "folder"
+            
+            MDButtonText:
+                text: "Open"
+
+        MDLabel:
+            id: folder_name
+            text: root.text
+            role: "medium"
+            adaptive_height: True
+            color: "grey"
+            pos: "12dp", "12dp"
+            bold: True
+
+MDScreen:
+    md_bg_color: self.theme_cls.backgroundColor
+    elevetion: 4
+    MDNavigationLayout:
+
+        MDScreenManager:
+            id: screen_manager
+            MDScreen:
+                name: "home"
+                MDScrollView:
+                    id: scroll_view
+                    scroll_type: ['bars', 'content']
+                    bar_width: 20
+                    bar_color: "orange"  # Red
+                    bar_inactive_color: 0.3, 0, 0, 0.5  # Dark red
+                    size_hint: None, None
+                    width: root.width
+                    size_hint_y:.78
+                    padding: '10dp'
+                    pos_hint: {'center_x': .5,'center_y': .5}
+                    MDGridLayout:
+                        id: box
+                        cols: 1
+                        spacing: '30dp'
+                        padding: '30dp'
+                        size_hint_y:None
+                        pos_hint: {'center_x': .5,'center_y': .5}
+                        adaptive_height: True
+
+        MDTopAppBar:
+            type: "small"
+            pos_hint: {"center_x": .5, "center_y": .97}
+            elevetion: 4
+
+            MDTopAppBarLeadingButtonContainer:
+
+                MDActionTopAppBarButton:
+                    icon: "menu"
+                    on_release: nav_drawer.set_state("toggle")
+
+            MDTopAppBarTitle:
+                text: "."
+                role: "small"
+
+            MDTopAppBarTrailingButtonContainer:
+                MDButton:
+                    style: "text"
+                    on_release: app.on_start()
+                    MDButtonIcon:
+                        icon: 'home'
+                    # MDButtonText:
+                    #     text: "Home"
+                
+                MDButton:
+                    style: "text"
+                    on_release: app.prevoius_secreen()
+                    MDButtonIcon:
+                        icon: 'arrow-left'
+                    # MDButtonText:
+                    #     text: "Back"
+                
+                MDButton:
+                    style: "text"
+                    on_release: app.stops_download()
+                    MDButtonIcon:
+                        icon: 'stop'
+                    # MDButtonText:
+                    #     text: "Stop"
+                
+                # MDButton:
+                #     style: "text"
+                #     on_release: app.switch_theme_style()
+                #     MDButtonIcon:
+                #         icon: 'moon-waning-crescent'
+                #     MDButtonText:
+                #         text: "Light/Dark"
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            orientation: "vertical"
+            radius: 0, dp(16), dp(16), 0
+            padding: "12dp"
+            MDBoxLayout:
+                radius: "12dp"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                size_hint: 1, .3
+                md_bg_color: self.theme_cls.onSurfaceVariantColor
+                FitImage:
+                    source: "logo.png"
+                    size_hint_y: 1
+                    pos_hint: {"top": 1}
+                    radius: "36dp", "36dp", 0, 0
+
+        
+            MDScrollView:
+                adaptive_size: True
+                padding: '10dp'
+                size_hint: 1, .7
+                pos_hint: {'center_x': .5,'center_y': .5}
+
+                MDNavigationDrawerMenu:
+                    id:catergories
+                    MDNavigationDrawerLabel:
+                        text: "info@starrygoldacademy.com"
+                        font_style: "Label"
+                        role: "small"
+                        # theme_line_height: "Custom"
+                        # line_height: 0
+                        # padding_x: "16dp"
+                        # padding_y: "16dp"
+
+                    MDNavigationDrawerDivider:
+                    
+                    MDNavigationDrawerItem:
+                        on_release: nav_drawer.set_state("close")
+
+                        MDNavigationDrawerItemLeadingIcon:
+                            icon: "microsoft-windows"
+
+                        MDNavigationDrawerItemText:
+                            text: "EaslyDriverDownloader"
+                            role: "small"
+                    
+                    MDNavigationDrawerItem:
+
+                        MDNavigationDrawerItemLeadingIcon:
+                            icon: "robot-happy"
+                            font_size: "7dp"
+
+                        MDNavigationDrawerItemText:
+                            text: "Version 1.0.0"
+                            role: "small"
+
+                    MDNavigationDrawerDivider:
+    MDBoxLayout:
+        size_hint:1,.9
+        padding_x:"40dp" 
+        MDLabel:
+            id: down_status
+            halign: "center"
+            role: 'small'
+            pos_hint: {'center_x': .5, 'center_y': 1} 
